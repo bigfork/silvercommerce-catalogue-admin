@@ -3,6 +3,7 @@
 namespace SilverCommerce\CatalogueAdmin\Model;
 
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\Security\Security;
 use SilverStripe\View\SSViewer;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\ArrayData;
@@ -204,7 +205,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
             $this->ID,
             $action
         );
-        
+
         $this->extend('updateRelativeLink', $link, $action);
 
         return $link;
@@ -335,7 +336,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
         $pages = ArrayList::create(array_reverse($pages));
         $template = SSViewer::create('BreadcrumbsTemplate');
 
-        
+
         return $template->process($this->customise(ArrayData::create([
             "Pages" => $pages,
             "Unlinked" => $unlinked,
@@ -412,7 +413,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
                 "Title" => "ASC"
             ];
         }
-        
+
         $ids = [$this->ID];
         $ids = array_merge($ids, $this->getDescendantIDList());
 
@@ -456,7 +457,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
             $fields->removeByName("Sort");
             $fields->removeByName("Disabled");
             $fields->removeByName("Products");
-            
+
             if ($this->exists()) {
                 // Ensure that we set the parent ID to the current category
                 // when creating a new record
@@ -592,7 +593,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -608,7 +609,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -624,7 +625,7 @@ class CatalogueCategory extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
