@@ -26,14 +26,24 @@
         "issues": "https://github.com/silvercommerce/catalogue-admin/issues"
     },
     "require": {
-        "silverstripe/framework": "^4.2",
-        "silverstripe/siteconfig": "^4.2",
-        "silverstripe/asset-admin": "^1.0",
-        "i-lateral/silverstripe-modeladminplus": "^1.0",
-        "silvercommerce/tax-admin": "^1.4",
-        "silvercommerce/settings": "^1.0",
+        "silverstripe/framework": "^5",
+        "silverstripe/siteconfig": "^5",
+        "silverstripe/asset-admin": "^2",
+        "i-lateral/silverstripe-modeladminplus": "^2",
+        "silvercommerce/tax-admin": "dev-ss5",
+        "silvercommerce/settings": "dev-ss5",
         "bummzack/sortablefile": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bigfork/silvercommerce-tax-admin"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/bigfork/silvercommerce-settings"
+        }
+    ],
     "extra": {
         "expose": [
             "client/dist"
