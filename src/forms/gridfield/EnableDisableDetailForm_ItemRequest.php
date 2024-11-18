@@ -30,35 +30,35 @@ class EnableDisableDetailForm_ItemRequest extends GridFieldDetailForm_ItemReques
         if ($form && $this->record->ID !== 0 && $this->record->canEdit()) {
             $fields = $form->Fields();
             $actions = $form->Actions();
-        
+
             // Remove the disabled field
             $fields->removeByName("Disabled");
-            
+
             if ($this->record->isEnabled()) {
                 $actions->insertBefore(
+                    "action_doDelete",
                     FormAction::create(
                         'doDisable',
                         _t('Catalogue.Disable', 'Disable')
                     )->setUseButtonTag(true)
                     ->addExtraClass('btn btn-outline-danger btn-hide-outline')
                     ->addExtraClass('action font-icon-cancel-circled'),
-                    "action_doDelete"
                 );
             } elseif ($this->record->isDisabled()) {
                 $actions->insertBefore(
+                    "action_doDelete",
                     FormAction::create(
                         'doEnable',
                         _t('Catalogue.Enable', 'Enable')
                     )->setUseButtonTag(true)
                     ->addExtraClass('btn btn-outline-primary btn-hide-outline')
                     ->addExtraClass('action font-icon-check-mark-circle'),
-                    "action_doDelete"
                 );
             }
         }
-        
+
         $this->extend("updateItemEditForm", $form);
-        
+
         return $form;
     }
 
@@ -72,7 +72,7 @@ class EnableDisableDetailForm_ItemRequest extends GridFieldDetailForm_ItemReques
         }
 
         $form->saveInto($record);
-        
+
         $record->Disabled = 0;
         $record->write();
         $this->gridField->getList()->add($record);
@@ -82,12 +82,12 @@ class EnableDisableDetailForm_ItemRequest extends GridFieldDetailForm_ItemReques
             $this->record->singular_name(),
             '"'.Convert::raw2xml($this->record->Title).'"'
         );
-        
+
         $form->sessionMessage($message, 'good');
         return $this->edit(Controller::curr()->getRequest());
     }
-    
-    
+
+
     public function doDisable($data, $form)
     {
         $record = $this->record;
@@ -97,7 +97,7 @@ class EnableDisableDetailForm_ItemRequest extends GridFieldDetailForm_ItemReques
         }
 
         $form->saveInto($record);
-        
+
         $record->Disabled = 1;
         $record->write();
         $this->gridField->getList()->add($record);
@@ -107,7 +107,7 @@ class EnableDisableDetailForm_ItemRequest extends GridFieldDetailForm_ItemReques
             $this->record->singular_name(),
             '"'.Convert::raw2xml($this->record->Title).'"'
         );
-        
+
         $form->sessionMessage($message, 'good');
         return $this->edit(Controller::curr()->getRequest());
     }
