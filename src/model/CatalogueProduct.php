@@ -826,7 +826,7 @@ class CatalogueProduct extends DataObject implements PermissionProvider, Taxable
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -842,7 +842,7 @@ class CatalogueProduct extends DataObject implements PermissionProvider, Taxable
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -858,7 +858,7 @@ class CatalogueProduct extends DataObject implements PermissionProvider, Taxable
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
