@@ -7,6 +7,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
+use SilverStripe\Security\Security;
 
 /**
  * A simple tag that can be used to filter products
@@ -77,7 +78,7 @@ class ProductTag extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -93,7 +94,7 @@ class ProductTag extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
@@ -109,7 +110,7 @@ class ProductTag extends DataObject implements PermissionProvider
         } elseif (is_numeric($member)) {
             $memberID = $member;
         } else {
-            $memberID = Member::currentUserID();
+            $memberID = Security::getCurrentUser()?->ID ?? 0;
         }
 
         return Permission::checkMember(
